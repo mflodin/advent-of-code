@@ -1,4 +1,4 @@
-import { spiral, distance } from "../3";
+import { spiral, distance, sum } from "../3";
 describe("spiral", () => {
   it("should return a correct spiral for 4", () => {
     let aSpiral = [];
@@ -51,5 +51,35 @@ describe("distance", () => {
   });
   it("should return 31 for 1024", () => {
     expect(distance(1024)).toBe(31);
+  });
+});
+
+describe("sum", () => {
+  it("should return 1 for 1", () => {
+    expect(sum(1)).toBe(1);
+  });
+  it("should return 1 for 2", () => {
+    expect(sum(2)).toBe(1);
+  });
+  it("should return 2 for 23", () => {
+    expect(sum(3)).toBe(2);
+  });
+  it("should return 4 for 4", () => {
+    expect(sum(4)).toBe(4);
+  });
+  it("should return 5 for 5", () => {
+    expect(sum(5)).toBe(5);
+  });
+  it("should return 10 for 6", () => {
+    expect(sum(6)).toBe(10);
+  });
+  it("should return 11 for 7", () => {
+    expect(sum(7)).toBe(11);
+  });
+  it("should return 147 for 17", () => {
+    expect(sum(17)).toBe(147);
+  });
+  it("should return 806 for 23", () => {
+    expect(sum(23)).toBe(806);
   });
 });
