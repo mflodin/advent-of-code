@@ -1,4 +1,4 @@
-import { count } from "./4";
+import { count, validate2 } from "./4";
 import fs from "fs";
 
 function read(file, callback) {
@@ -11,5 +11,5 @@ function read(file, callback) {
 }
 
 read("inputs/4.input.txt", function(text) {
-  console.log(count(text));
+  console.log(count(validate2, text));
 });
