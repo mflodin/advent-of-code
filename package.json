@@ -4,6 +4,7 @@
   "description": "Doing the advent of code challenge",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node index.js",
     "test": "babel-node run.js",
     "test-watch": "nodemon --exec npm run test"
   },
