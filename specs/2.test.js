@@ -1,4 +1,4 @@
-import { min, max, diff, checksum } from "../2";
+import { min, max, diff, checksum, div, checksum2 } from "../2";
 
 const table = `5 1 9 5
 7 5 3
@@ -33,5 +33,24 @@ describe("Part one", function() {
 
   it("should return 18 for the table", function() {
     expect(checksum(table)).toBe(18);
+  });
+});
+
+const table2 = `5 9 2 8
+9 4 7 3
+3 8 6 5`;
+
+describe("Part two", () => {
+  it("should return 4 for row 1", () => {
+    expect(div(table2.split("\n")[0])).toBe(4);
+  });
+  it("should return 3 for row 2", () => {
+    expect(div(table2.split("\n")[1])).toBe(3);
+  });
+  it("should return 2 for row 3", () => {
+    expect(div(table2.split("\n")[2])).toBe(2);
+  });
+  it("should return 9 for table2", () => {
+    expect(checksum2(table2)).toBe(9);
   });
 });
