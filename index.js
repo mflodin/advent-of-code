@@ -1,4 +1,4 @@
-import { count, validate2 } from "./4";
+import { toArray, Jumper, Jumper2, jumpRunner } from "./5";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,6 +10,7 @@ function read(file, callback) {
   });
 }
 
-read("inputs/4.input.txt", function(text) {
-  console.log(count(validate2, text));
+read("inputs/5.input.txt", function(text) {
+  console.log("1: " + jumpRunner(new Jumper(toArray(text))).steps);
+  console.log("2: " + jumpRunner(new Jumper2(toArray(text))).steps);
 });
