@@ -40,5 +40,9 @@ export function runner(defragger) {
     currentState = defragger.memory.join(",");
   }
 
-  return defragger;
+  return {
+    steps: defragger.steps,
+    memory: defragger.memory,
+    loopSize: defragger.steps - previousStates.indexOf(currentState)
+  };
 }

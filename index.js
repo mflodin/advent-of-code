@@ -11,5 +11,7 @@ function read(file, callback) {
 }
 
 read("inputs/6.input.txt", function(text) {
-  console.log("1: " + runner(new Defragger(toArray(text))).steps);
+  const result = runner(new Defragger(toArray(text)));
+  console.log("1: " + result.steps);
+  console.log("2: " + result.loopSize);
 });

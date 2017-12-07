@@ -74,4 +74,8 @@ describe("runner", () => {
     expect(result.steps).toBe(5);
     expect(result.memory).toEqual([2, 4, 1, 2]);
   });
+  it("should say how big the loop is", () => {
+    const result = runner(new Defragger([0, 2, 7, 0]));
+    expect(result.loopSize).toBe(4);
+  });
 });
