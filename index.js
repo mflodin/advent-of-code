@@ -1,4 +1,4 @@
-import { toArray, Defragger, runner } from "./6";
+import { findBottom, toTree, balancer, weightMapper } from "./7";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,8 +10,21 @@ function read(file, callback) {
   });
 }
 
-read("inputs/6.input.txt", function(text) {
-  const result = runner(new Defragger(toArray(text)));
-  console.log("1: " + result.steps);
-  console.log("2: " + result.loopSize);
+read("inputs/7.input.txt", function(text) {
+  const tree = toTree(text);
+  console.log("1: " + tree.name);
+  const weighted = weightMapper(tree);
+  const unbalanced = balancer(weighted);
+  console.log(
+    "2 " +
+      JSON.stringify({
+        name: unbalanced.name,
+        weight: unbalanced.weight,
+        fullWeight: unbalanced.fullWeight,
+        balancedWeight: unbalanced.balancedWeight
+        // children: unbalanced.children
+      })
+  );
+
+  // console.log(JSON.stringify(weighted));
 });
