@@ -1,4 +1,4 @@
-import { toArray, Jumper, Jumper2, jumpRunner } from "./5";
+import { toArray, Defragger, runner } from "./6";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,7 +10,6 @@ function read(file, callback) {
   });
 }
 
-read("inputs/5.input.txt", function(text) {
-  console.log("1: " + jumpRunner(new Jumper(toArray(text))).steps);
-  console.log("2: " + jumpRunner(new Jumper2(toArray(text))).steps);
+read("inputs/6.input.txt", function(text) {
+  console.log("1: " + runner(new Defragger(toArray(text))).steps);
 });
