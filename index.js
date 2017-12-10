@@ -1,4 +1,4 @@
-import { lineparser, toArray, Processor, findLargest } from "./8";
+import { garbageRemover, groupScorer, garbageScorer } from "./9";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,14 +10,7 @@ function read(file, callback) {
   });
 }
 
-read("inputs/8.input.txt", function(text) {
-  const instructions = toArray(text);
-  const processor = new Processor();
-
-  instructions.forEach(instruction => {
-    processor.process(instruction);
-  });
-
-  console.log("1: " + processor.largest);
-  console.log("2: " + processor.largestEver);
+read("inputs/9.input.txt", function(text) {
+  console.log("1: " + groupScorer(garbageRemover(text)));
+  console.log("2: " + garbageScorer(text));
 });
