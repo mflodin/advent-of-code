@@ -1,4 +1,4 @@
-import { generateList, Hasher, toArray } from "./10";
+import { generateList, Hasher, toArray, runner } from "./10";
 import fs from "fs";
 
 function read(file, callback) {
@@ -11,10 +11,14 @@ function read(file, callback) {
 }
 
 read("inputs/10.input.txt", function(text) {
-  const hasher = new Hasher(generateList(256));
+  const hasher1 = new Hasher();
   const lengths = toArray(text);
-  lengths.forEach(l => hasher.hash(l));
-  const [a, b] = hasher.list;
+  lengths.forEach(l => hasher1.hash(l));
+  const [a, b] = hasher1.list;
   console.log("1: ", a * b);
+
+  const hasher = new Hasher();
+  const knotHash = runner({ hasher, string: text.trim() });
+  console.log("2: ", knotHash);
   // console.log("2: " + text);
 });
