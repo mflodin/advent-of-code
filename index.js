@@ -1,4 +1,4 @@
-import { garbageRemover, groupScorer, garbageScorer } from "./9";
+import { generateList, Hasher, toArray } from "./10";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,7 +10,11 @@ function read(file, callback) {
   });
 }
 
-read("inputs/9.input.txt", function(text) {
-  console.log("1: " + groupScorer(garbageRemover(text)));
-  console.log("2: " + garbageScorer(text));
+read("inputs/10.input.txt", function(text) {
+  const hasher = new Hasher(generateList(256));
+  const lengths = toArray(text);
+  lengths.forEach(l => hasher.hash(l));
+  const [a, b] = hasher.list;
+  console.log("1: ", a * b);
+  // console.log("2: " + text);
 });
