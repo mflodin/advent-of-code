@@ -18,7 +18,6 @@ export function inputParser(input) {
 }
 
 export function connectionWalker(connections, startNodeId, visited = []) {
-  debugger;
   visited.push(startNodeId);
   let node = connections[startNodeId];
 
@@ -30,4 +29,21 @@ export function connectionWalker(connections, startNodeId, visited = []) {
       return connectionWalker(connections, curr, visited);
     }, visited)
     .sort();
+}
+
+export function groupFinder(pipes) {
+  debugger;
+  let visited = [];
+  let groups = [];
+  for (var i = 0; i < pipes.length; i++) {
+    if (visited.includes(i)) {
+      continue;
+    }
+
+    let group = connectionWalker(pipes, i);
+
+    visited = visited.concat(group);
+    groups.push(group);
+  }
+  return groups;
 }

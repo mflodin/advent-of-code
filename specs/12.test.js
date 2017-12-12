@@ -1,4 +1,4 @@
-import { lineParser, inputParser, connectionWalker } from "../12";
+import { lineParser, inputParser, connectionWalker, groupFinder } from "../12";
 //
 const input = `0 <-> 2
 1 <-> 1
@@ -58,5 +58,15 @@ describe("connectionWalker", () => {
   it("should visit all connections of the starting node 1", () => {
     const connections = connectionWalker(inputParser(input), 1);
     expect(connections).toEqual([1]);
+  });
+});
+
+describe("groupFinder", () => {
+  it("should find all the groups among the pipes", () => {
+    const pipes = inputParser(input);
+    const groups = groupFinder(pipes);
+    expect(groups.length).toBe(2);
+    expect(groups).toContain([1]);
+    expect(groups).toContain([0, 2, 3, 4, 5, 6]);
   });
 });

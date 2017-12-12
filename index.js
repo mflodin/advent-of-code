@@ -1,4 +1,4 @@
-import { inputParser, connectionWalker } from "./12";
+import { inputParser, connectionWalker, groupFinder } from "./12";
 import fs from "fs";
 
 function read(file, callback) {
@@ -11,7 +11,9 @@ function read(file, callback) {
 }
 
 read("inputs/12.input.txt", function(text) {
-  const connections = inputParser(text);
-  const zeroConnections = connectionWalker(connections, 0);
+  const pipes = inputParser(text);
+  const zeroConnections = connectionWalker(pipes, 0);
+  const groups = groupFinder(pipes);
   console.log("1: ", zeroConnections.length);
+  console.log("2: ", groups.length);
 });
