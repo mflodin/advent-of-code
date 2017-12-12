@@ -75,4 +75,36 @@ describe("Stepper", function() {
     expect(walker.y).toBe(-2.5);
     expect(walker.distance).toBe(3);
   });
+  it("ne,ne,ne is at most 3 steps away.", function() {
+    const walker = new Walker();
+    walker.walk("ne");
+    walker.walk("ne");
+    walker.walk("ne");
+    expect(walker.maxDistance).toBe(3);
+  });
+  it("ne,ne,sw,sw is at most 2 steps away (back where you started).", function() {
+    const walker = new Walker();
+    walker.walk("ne");
+    walker.walk("ne");
+    walker.walk("sw");
+    walker.walk("sw");
+    expect(walker.maxDistance).toBe(2);
+  });
+  it("ne,ne,s,s is at most 2 steps away (se,se).", function() {
+    const walker = new Walker();
+    walker.walk("ne");
+    walker.walk("ne");
+    walker.walk("s");
+    walker.walk("s");
+    expect(walker.maxDistance).toBe(2);
+  });
+  it("se,sw,se,sw,sw is at most 3 steps away (s,s,sw).", function() {
+    const walker = new Walker();
+    walker.walk("se");
+    walker.walk("sw");
+    walker.walk("se");
+    walker.walk("sw");
+    walker.walk("sw");
+    expect(walker.maxDistance).toBe(3);
+  });
 });

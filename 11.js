@@ -15,6 +15,7 @@ export function Walker() {
   this.y = 0;
   this.x = 0;
   this.distance = 0;
+  this.maxDistance = 0;
 
   this.walk = function walk(direction) {
     switch (direction) {
@@ -44,5 +45,8 @@ export function Walker() {
     }
 
     this.distance = Math.abs(this.y) + Math.abs(this.x);
+    if (this.distance > this.maxDistance) {
+      this.maxDistance = this.distance;
+    }
   };
 }

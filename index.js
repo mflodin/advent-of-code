@@ -15,4 +15,5 @@ read("inputs/11.input.txt", function(text) {
   const directions = toArray(text);
   directions.forEach(d => walker.walk(d));
   console.log("1: ", walker.distance);
+  console.log("2: ", walker.maxDistance);
 });
