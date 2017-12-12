@@ -1,4 +1,4 @@
-import { Walker, toArray } from "./11";
+import { inputParser, connectionWalker } from "./12";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,10 +10,8 @@ function read(file, callback) {
   });
 }
 
-read("inputs/11.input.txt", function(text) {
-  const walker = new Walker();
-  const directions = toArray(text);
-  directions.forEach(d => walker.walk(d));
-  console.log("1: ", walker.distance);
-  console.log("2: ", walker.maxDistance);
+read("inputs/12.input.txt", function(text) {
+  const connections = inputParser(text);
+  const zeroConnections = connectionWalker(connections, 0);
+  console.log("1: ", zeroConnections.length);
 });
