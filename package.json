@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
-    "debug": "babel-node --inspect --inspect-brk run.js",
+    "watch": "nodemon --exec babel-node index.js",
+    "profiling": "babel-node --prof index.js",
+    "debug": "babel-node --inspect --inspect-brk index.js",
     "test": "nodemon --exec babel-node run.js"
   },
   "keywords": ["fun", "advent"],

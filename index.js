@@ -1,4 +1,5 @@
-import { inputParser, connectionWalker, groupFinder } from "./12";
+import { Firewall, runner, stealthRunner } from "./13";
+
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,10 +11,18 @@ function read(file, callback) {
   });
 }
 
-read("inputs/12.input.txt", function(text) {
-  const pipes = inputParser(text);
-  const zeroConnections = connectionWalker(pipes, 0);
-  const groups = groupFinder(pipes);
-  console.log("1: ", zeroConnections.length);
-  console.log("2: ", groups.length);
+read("inputs/13.input.txt", function(text) {
+  const severity = runner({
+    firewall: new Firewall(text),
+    packetStart: 0
+  });
+
+  const stealthDelay = stealthRunner({
+    input: text,
+    limit: 10000,
+    minDelay: 9990
+  });
+
+  console.log("1: ", severity);
+  console.log("2: ", stealthDelay);
 });
