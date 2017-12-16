@@ -2,8 +2,10 @@ import {
   lineParser,
   inputParser,
   Firewall,
+  Packet,
   runner,
-  stealthRunner
+  stealthRunner,
+  mathRunner
 } from "../13";
 
 const input = `0: 3
@@ -94,30 +96,37 @@ describe("Firewall", () => {
 
   it("should keep track of the packet if entered", () => {
     const firewall = new Firewall(input);
-    expect(firewall.packetPosition).toBeUndefined();
-    firewall.enter();
-    expect(firewall.packetPosition).toBe(-1);
+    const packet = new Packet();
+
+    expect(firewall.packets[0]).toBeUndefined();
+
+    firewall.enter(packet);
+    expect(firewall.packets[0].position).toBe(-1);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(0);
+    expect(firewall.packets[0].position).toBe(0);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(1);
+    expect(firewall.packets[0].position).toBe(1);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(2);
+    expect(firewall.packets[0].position).toBe(2);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(3);
+    expect(firewall.packets[0].position).toBe(3);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(4);
+    expect(firewall.packets[0].position).toBe(4);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(5);
+    expect(firewall.packets[0].position).toBe(5);
     firewall.tick();
-    expect(firewall.packetPosition).toBe(6);
+    expect(firewall.packets[0].position).toBe(6);
     firewall.tick();
-    expect(firewall.packetPosition).toBeUndefined();
+    firewall.tick();
+    firewall.tick();
+    firewall.tick();
+    expect(firewall.packets[0]).toBeUndefined();
   });
 
   it("should keep track of when packet is caught", () => {
     const firewall = new Firewall(input);
-    firewall.enter();
+    const packet = new Packet();
+    firewall.enter(packet);
     firewall.tick();
     firewall.tick();
     firewall.tick();
@@ -126,23 +135,31 @@ describe("Firewall", () => {
     firewall.tick();
     firewall.tick();
     firewall.tick();
-    expect(firewall.catches).toEqual([0, 6]);
+    expect(packet.catches).toEqual([0, 6]);
   });
 });
 
 describe("runner", () => {
   it("should calculate the severity of the catches", () => {
-    const severity = runner({
-      firewall: new Firewall(input),
-      packetStart: 0,
-      ticks: 8
+    const firewall = new Firewall(input);
+    const packets = runner({
+      firewall: firewall,
+      limit: 9
     });
+
+    const severity = packets[0].severity({ firewall });
     expect(severity).toBe(24);
   });
 });
 
 describe("stealthRunner", () => {
   it("should find the shortest delay needed to pass through unharmed", () => {
-    expect(stealthRunner({ input })).toBe(10);
+    expect(stealthRunner({ input, limit: 22 })).toBe(10);
+  });
+});
+
+describe("mathRunner", () => {
+  it("should find the shortest delay needed to pass through unharmed", () => {
+    expect(mathRunner({ input })).toBe(10);
   });
 });

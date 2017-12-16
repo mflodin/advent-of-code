@@ -8,6 +8,7 @@
     "watch": "nodemon --exec babel-node index.js",
     "profiling": "babel-node --prof index.js",
     "debug": "babel-node --inspect --inspect-brk index.js",
+    "debug-test": "babel-node --inspect --inspect-brk run.js",
     "test": "nodemon --exec babel-node run.js"
   },
   "keywords": ["fun", "advent"],
