@@ -1,4 +1,4 @@
-import { Firewall, runner, mathRunner } from "./13";
+import { toBinary, toGrid, squareCounter } from "./14";
 
 import fs from "fs";
 
@@ -11,18 +11,11 @@ function read(file, callback) {
   });
 }
 
-read("inputs/13.input.txt", function(text) {
-  const firewall = new Firewall(text);
-  const severity = runner({
-    firewall,
-    limit: 100
-  })[0].severity({ firewall });
+// read("inputs/13.input.txt", function(text) {
 
-  const stealthDelay = mathRunner({
-    input: text,
-    limit: 1000000000
-  });
+const text = "ljoxqyyw";
 
-  console.log("1: ", severity);
-  console.log("2: ", stealthDelay);
-});
+const squareCount = squareCounter(toGrid(text));
+console.log("1: ", squareCount);
+// console.log("2: ", );
+// });
