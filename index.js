@@ -1,4 +1,4 @@
-import { judge, generator } from "./15";
+import { parseMoves, dance } from "./16";
 
 import fs from "fs";
 
@@ -11,18 +11,29 @@ function read(file, callback) {
   });
 }
 
-// read("inputs/13.input.txt", function(text) {
-let a = generator({ seed: 512, factor: 16807 });
-let b = generator({ seed: 191, factor: 48271 });
-let rounds = 40e6;
+read("inputs/16.input.txt", function(text) {
+  let moves = parseMoves(text);
+  let line = "abcdefghijklmnop";
 
-let matches = judge({ a, b, rounds });
-console.log("1: ", matches);
+  let order = dance({ line, moves });
 
-a = generator({ seed: 512, factor: 16807, multiple: 4 });
-b = generator({ seed: 191, factor: 48271, multiple: 8 });
-rounds = 5e6;
+  console.log("1: ", order);
 
-matches = judge({ a, b, rounds });
-console.log("2: ", matches);
-// });
+  const rounds = 1e3; // 1e9;
+  const logRound = 1e2;
+
+  let t0, t1;
+  for (var i = 0; i < rounds - 1; i++) {
+    if (i % logRound === 1) {
+      t0 = Date.now();
+    }
+
+    order = dance({ line: order, moves });
+
+    if (i > 0 && i % logRound === 0) {
+      t1 = Date.now();
+      console.log("round", i, order, t1 - t0);
+    }
+  }
+  // console.log("2: ", matches);
+});
