@@ -1,4 +1,4 @@
-import { runner, spinlockGenerator } from "./17";
+import { runner, spinlockGenerator, fastRunner } from "./17";
 import fs from "fs";
 
 function read(file, callback) {
@@ -12,8 +12,17 @@ function read(file, callback) {
 
 // read("inputs/16.input.txt", function(text) {
 const input = 363;
-const value = runner({ spinlock: spinlockGenerator(input), iterations: 2017 });
+let value;
+value = runner({
+  spinlock: spinlockGenerator(input),
+  iterations: 2017
+});
 console.log("1: ", value);
 
-// console.log("2: ", order);
+value = fastRunner({
+  stepSize: input,
+  iterations: 50000000
+});
+
+console.log("2: ", value);
 // });

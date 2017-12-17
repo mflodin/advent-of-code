@@ -1,24 +1,40 @@
 export function* spinlockGenerator(stepSize) {
-  let state = [0];
+  let buffer = [0];
   let count = 0;
   let position = 0;
   while (true) {
     count += 1;
-    position = (position + stepSize) % state.length + 1;
-    let before = state.slice(0, position);
-    let after = state.slice(position);
-    // console.log(position, before, after);
-    state = [...before, count, ...after];
-    // console.log(state);
-    yield state;
+    position = (position + stepSize) % count + 1;
+    buffer.splice(position, 0, count);
+    yield buffer;
   }
 }
 
-export function runner({ spinlock, iterations }) {
+export function fastRunner({ stepSize, iterations }) {
+  let count = 0;
+  let position = 0;
+  let candidate = 0;
+  while (count < iterations) {
+    count += 1;
+
+    position = (position + stepSize) % count + 1;
+    if (position === 1) {
+      candidate = count;
+    }
+  }
+
+  return candidate;
+}
+
+export function runner({ spinlock, iterations, findNextTo = iterations }) {
+  let t1, t0;
+  const logAt = 1e4;
+  let previous = 0;
   for (let i = 0; i < iterations - 1; i++) {
-    spinlock.next();
+    spinlock.next().value;
   }
 
   const buffer = spinlock.next().value;
-  return buffer[(buffer.indexOf(iterations) + 1) % buffer.length];
+
+  return buffer[(buffer.indexOf(findNextTo) + 1) % buffer.length];
 }

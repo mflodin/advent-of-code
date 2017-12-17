@@ -1,4 +1,4 @@
-import { spinlockGenerator, runner } from "../17";
+import { spinlockGenerator, runner, fastRunner, calculateIndex } from "../17";
 
 const steps = 3;
 
@@ -24,5 +24,42 @@ describe("runner", () => {
       iterations: 2017
     });
     expect(value).toBe(638);
+  });
+
+  it("should find the value directly after provided findNextTo (2017 iterations)", () => {
+    const value = runner({
+      spinlock: spinlockGenerator(steps),
+      iterations: 2017,
+      findNextTo: 0
+    });
+    expect(value).toBe(1226);
+  });
+
+  it("should find the value directly after provided findNextTo (9 iterations)", () => {
+    const value = runner({
+      spinlock: spinlockGenerator(steps),
+      iterations: 9,
+      findNextTo: 0
+    });
+    expect(value).toBe(9);
+  });
+});
+
+describe("fastRunner", () => {
+  it("should find the value directly after 0 (2017 iterations)", () => {
+    const value = fastRunner({
+      stepSize: steps,
+      iterations: 2017
+    });
+    expect(value).toBe(1226);
+  });
+
+  it("should find the value directly after 0 (9 iterations)", () => {
+    const value = fastRunner({
+      stepSize: steps,
+      iterations: 9,
+      findNextTo: 0
+    });
+    expect(value).toBe(9);
   });
 });
