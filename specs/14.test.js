@@ -1,5 +1,13 @@
 import { Hasher, runner } from "../10";
-import { toBinary, toGrid, squareCounter } from "../14";
+import {
+  toBinary,
+  toGrid,
+  toNodeGrid,
+  squareCounter,
+  regionCounter,
+  Cell,
+  visitAdjecent
+} from "../14";
 
 const input = "flqrgnkx";
 
@@ -91,7 +99,7 @@ describe("hashrows", () => {
   });
 });
 
-describe("toGrid", () => {
+xdescribe("toGrid", () => {
   it("should create a grid with 128 rows", () => {
     expect(toGrid(input).length).toBe(128);
   });
@@ -117,11 +125,61 @@ describe("squareCounter", () => {
     expect(squareCounter(grid)).toBe(29);
   });
 
-  it("should count all the used squares in the grid", () => {
+  it("should count all the used squares in the full grid", () => {
     const grid = toGrid(input);
     // console.log(grid);
     expect(squareCounter([grid[0]])).toBe(74);
     expect(squareCounter([grid[1]])).toBe(72);
     expect(squareCounter([grid[127]])).toBe(62);
+    expect(squareCounter(grid)).toBe(8108);
+  });
+});
+
+describe("regionCounter", () => {
+  it("should count all the regions in the grid", () => {
+    const grid = [
+      "11010100",
+      "01010101",
+      "00001010",
+      "10101101",
+      "01101000",
+      "11001001",
+      "01000100",
+      "11010110"
+    ];
+    expect(regionCounter(grid)).toBe(12);
+  });
+  it("should count all the regions in the full grid", () => {
+    const grid = toGrid(input);
+    // console.log(grid);
+    expect(regionCounter(grid)).toBe(1242);
+  });
+});
+
+describe("visitAdjecent", () => {
+  it("should visit all adjecent cells", () => {
+    const grid = toNodeGrid(["1101", "0111", "1000", "1010"]);
+
+    visitAdjecent(grid[0][1], grid);
+
+    expect(grid[0][0].visited).toBe(true, "[0][0]");
+    expect(grid[0][1].visited).toBe(true, "[0][1]");
+    expect(grid[0][2].visited).toBe(false, "[0][2]");
+    expect(grid[0][3].visited).toBe(true, "[0][3]");
+
+    expect(grid[1][0].visited).toBe(false, "[1][0]");
+    expect(grid[1][1].visited).toBe(true, "[1][1]");
+    expect(grid[1][2].visited).toBe(true, "[1][2]");
+    expect(grid[1][3].visited).toBe(true, "[1][3]");
+
+    expect(grid[2][0].visited).toBe(false, "[2][0]");
+    expect(grid[2][1].visited).toBe(false, "[2][1]");
+    expect(grid[2][2].visited).toBe(false, "[2][2]");
+    expect(grid[2][3].visited).toBe(false, "[2][3]");
+
+    expect(grid[3][0].visited).toBe(false, "[3][0]");
+    expect(grid[3][1].visited).toBe(false, "[3][1]");
+    expect(grid[3][2].visited).toBe(false, "[3][2]");
+    expect(grid[3][3].visited).toBe(false, "[3][3]");
   });
 });

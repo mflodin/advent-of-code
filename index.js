@@ -1,4 +1,4 @@
-import { toBinary, toGrid, squareCounter } from "./14";
+import { toBinary, toGrid, squareCounter, regionCounter } from "./14";
 
 import fs from "fs";
 
@@ -14,8 +14,9 @@ function read(file, callback) {
 // read("inputs/13.input.txt", function(text) {
 
 const text = "ljoxqyyw";
-
-const squareCount = squareCounter(toGrid(text));
+const grid = toGrid(text);
+const squareCount = squareCounter(grid);
+const regionCount = regionCounter(grid);
 console.log("1: ", squareCount);
-// console.log("2: ", );
+console.log("2: ", regionCount);
 // });
