@@ -24,11 +24,13 @@ export function matches(a, b) {
   return a % sixteenBits === b % sixteenBits;
 }
 
-export function* generator({ seed, factor, multiple }) {
+export function* generator({ seed, factor, multiple = 1 }) {
   let value = seed;
   while (true) {
     value = (value * factor) % 2147483647;
-    yield value;
+    if (value % multiple === 0) {
+      yield value;
+    }
   }
 }
 

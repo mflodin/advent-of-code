@@ -12,11 +12,17 @@ function read(file, callback) {
 }
 
 // read("inputs/13.input.txt", function(text) {
-const a = generator({ seed: 512, factor: 16807 });
-const b = generator({ seed: 191, factor: 48271 });
-const rounds = 40e6;
+let a = generator({ seed: 512, factor: 16807 });
+let b = generator({ seed: 191, factor: 48271 });
+let rounds = 40e6;
 
-const matches = judge({ a, b, rounds });
+let matches = judge({ a, b, rounds });
 console.log("1: ", matches);
-// console.log("2: ", matches);
+
+a = generator({ seed: 512, factor: 16807, multiple: 4 });
+b = generator({ seed: 191, factor: 48271, multiple: 8 });
+rounds = 5e6;
+
+matches = judge({ a, b, rounds });
+console.log("2: ", matches);
 // });
