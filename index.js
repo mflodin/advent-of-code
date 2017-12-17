@@ -1,4 +1,4 @@
-import { toBinary, toGrid, squareCounter, regionCounter } from "./14";
+import { judge, generator } from "./15";
 
 import fs from "fs";
 
@@ -12,11 +12,11 @@ function read(file, callback) {
 }
 
 // read("inputs/13.input.txt", function(text) {
+const a = generator({ seed: 512, factor: 16807 });
+const b = generator({ seed: 191, factor: 48271 });
+const rounds = 40e6;
 
-const text = "ljoxqyyw";
-const grid = toGrid(text);
-const squareCount = squareCounter(grid);
-const regionCount = regionCounter(grid);
-console.log("1: ", squareCount);
-console.log("2: ", regionCount);
+const matches = judge({ a, b, rounds });
+console.log("1: ", matches);
+// console.log("2: ", matches);
 // });
