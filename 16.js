@@ -6,23 +6,25 @@ export function parseMoves(input) {
 }
 
 export function dance({ moves, line }) {
-  let newLine = line;
+  // let lines = [];
+  let newLine = line.split("");
   moves.forEach(({ move, n, a, b }) => {
+    // lines.push(newLine.join(""));
     newLine = move({ line: newLine, a, b, n });
   });
-  return newLine;
+
+  // lines.forEach(l => console.log(l));
+  return newLine.join("");
 }
 
 export function spin({ n, line }) {
-  return line.slice(-n) + line.slice(0, line.length - n);
+  return [...line.slice(-n), ...line.slice(0, line.length - n)];
 }
 
 export function exchange({ a, b, line }) {
-  let arr = line.split("");
-  let temp = arr[a];
-  arr[a] = arr[b];
-  arr[b] = temp;
-  return arr.join("");
+  // let arr = line.split("");
+  [line[a], line[b]] = [line[b], line[a]];
+  return line;
 }
 
 export function partner({ a, b, line }) {

@@ -2,20 +2,28 @@ import { spin, exchange, partner, parseMove, parseMoves, dance } from "../16";
 
 describe("spin", () => {
   it("should move the last n programs to the front", () => {
-    expect(spin({ line: "abcde", n: 3 })).toBe("cdeab");
-    expect(spin({ line: "abcde", n: 1 })).toBe("eabcd");
+    expect(spin({ line: "abcde".split(""), n: 3 })).toEqual("cdeab".split(""));
+    expect(spin({ line: "abcde".split(""), n: 1 })).toEqual("eabcd".split(""));
   });
 });
 describe("exchange", () => {
   it("should swap the programs by position", () => {
-    expect(exchange({ line: "abcde", a: 3, b: 4 })).toBe("abced");
-    expect(exchange({ line: "abcde", a: 1, b: 0 })).toBe("bacde");
+    expect(exchange({ line: "abcde".split(""), a: 3, b: 4 })).toEqual(
+      "abced".split("")
+    );
+    expect(exchange({ line: "abcde".split(""), a: 1, b: 0 })).toEqual(
+      "bacde".split("")
+    );
   });
 });
 describe("partner", () => {
   it("should swap the partners by name", () => {
-    expect(partner({ line: "abcde", a: "a", b: "d" })).toBe("dbcae");
-    expect(partner({ line: "abcde", a: "c", b: "e" })).toBe("abedc");
+    expect(partner({ line: "abcde".split(""), a: "a", b: "d" })).toEqual(
+      "dbcae".split("")
+    );
+    expect(partner({ line: "abcde".split(""), a: "c", b: "e" })).toEqual(
+      "abedc".split("")
+    );
   });
 });
 
