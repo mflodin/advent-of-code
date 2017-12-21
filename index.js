@@ -1,4 +1,4 @@
-import { runner, spinlockGenerator, fastRunner } from "./17";
+import { runner, Duet } from "./18";
 import fs from "fs";
 
 function read(file, callback) {
@@ -10,19 +10,9 @@ function read(file, callback) {
   });
 }
 
-// read("inputs/16.input.txt", function(text) {
-const input = 363;
-let value;
-value = runner({
-  spinlock: spinlockGenerator(input),
-  iterations: 2017
+read("inputs/18.input.txt", function(text) {
+  let frequency;
+  frequency = runner(new Duet(text));
+  console.log("1: ", frequency);
+  // console.log("2: ", frequency);
 });
-console.log("1: ", value);
-
-value = fastRunner({
-  stepSize: input,
-  iterations: 50000000
-});
-
-console.log("2: ", value);
-// });
