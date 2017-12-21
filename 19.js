@@ -21,7 +21,7 @@ export function mazerunner(input) {
     current = maze[position.y][position.x];
     // console.log("current", current, position);
   }
-  return letters.join("");
+  return letters.join("") + "\n2:  " + i;
 }
 
 function calculateNextPosition({ position, direction }) {
