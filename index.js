@@ -1,16 +1,11 @@
 import { read } from "./utils";
-import { Virus, EvolvedVirus } from "./22";
+import { Coprocessor } from "./23";
 
-read("inputs/22.input.txt").then(text => {
-  const virus = new Virus({ map: text });
-  for (let i = 0; i < 1e4; i++) {
-    virus.work();
+read("inputs/23.input.txt").then(text => {
+  const coprocessor = new Coprocessor({ instructions: text });
+  while (coprocessor.i < 1e5) {
+    coprocessor.execute();
   }
-  console.log("1: ", virus.infectionCount);
-
-  const evolvedVirus = new EvolvedVirus({ map: text });
-  for (let i = 0; i < 1e7; i++) {
-    evolvedVirus.work();
-  }
-  console.log("2: ", evolvedVirus.infectionCount);
+  console.log("1: ", coprocessor.mulCount);
+  // console.log("2: ", evolvedVirus.infectionCount);
 });
