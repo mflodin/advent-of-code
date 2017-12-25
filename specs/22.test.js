@@ -1,4 +1,4 @@
-import { Virus, parseMap } from "../22";
+import { Virus, parseMap, EvolvedVirus } from "../22";
 
 const startingMap = `..#
 #..
@@ -155,5 +155,60 @@ describe("Virus", () => {
       virus.work();
     }
     expect(virus.infectionCount).toBe(5587);
+  });
+});
+
+describe("EvolvedVirus", () => {
+  it("should have more toggle states", () => {
+    const virus = new EvolvedVirus({ map: startingMap });
+    virus.toggle();
+    expect(virus.map[1][1]).toBe("W");
+    virus.toggle();
+    expect(virus.map[1][1]).toBe("#");
+    virus.toggle();
+    expect(virus.map[1][1]).toBe("F");
+    virus.toggle();
+    expect(virus.map[1][1]).toBe(".");
+  });
+
+  it("should work correctly", () => {
+    const virus = new EvolvedVirus({ map: startingMap });
+
+    virus.work();
+    expect(virus.map).toEqual(parseMap(`..#\n#W.\n...`));
+    expect(virus.position).toEqual({ x: 0, y: 1 });
+
+    virus.work();
+    expect(virus.map).toEqual(parseMap(`..#\nFW.\n...`));
+    expect(virus.position).toEqual({ x: 0, y: 0 });
+
+    virus.work();
+    virus.work();
+    virus.work();
+    expect(virus.map).toEqual(parseMap(`WW.#\nWFW.\n....`));
+    expect(virus.position).toEqual({ x: 1, y: 1 });
+
+    virus.work();
+    expect(virus.map).toEqual(parseMap(`WW.#\nW.W.\n....`));
+    expect(virus.position).toEqual({ x: 0, y: 1 });
+
+    virus.work();
+    expect(virus.map).toEqual(parseMap(`.WW.#\n.#.W.\n.....`));
+    expect(virus.position).toEqual({ x: 0, y: 1 });
+  });
+
+  it("should count the number of infections", () => {
+    const virus = new EvolvedVirus({ map: startingMap });
+    let i = 0;
+
+    for (; i < 100; i++) {
+      virus.work();
+    }
+    expect(virus.infectionCount).toBe(26);
+
+    for (; i < 1e7; i++) {
+      virus.work();
+    }
+    expect(virus.infectionCount).toBe(2511944);
   });
 });

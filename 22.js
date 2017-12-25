@@ -108,3 +108,98 @@ export function Virus({ map = "." } = {}) {
     this.move();
   };
 }
+
+export function EvolvedVirus({ map = "." } = {}) {
+  this.infectionCount = 0;
+  this.map = parseMap(map);
+  this.position = getStartingPosition(this.map);
+  this.direction = "up";
+
+  this.turnLeft = () => {
+    switch (this.direction) {
+      case "up":
+        this.direction = "left";
+        break;
+      case "left":
+        this.direction = "down";
+        break;
+      case "down":
+        this.direction = "right";
+        break;
+      case "right":
+        this.direction = "up";
+        break;
+    }
+  };
+
+  this.turnRight = () => {
+    this.turnLeft();
+    this.turnLeft();
+    this.turnLeft();
+  };
+
+  this.move = () => {
+    switch (this.direction) {
+      case "up":
+        this.position.y -= 1;
+        if (this.position.y < 0) {
+          this.position.y = 0;
+          const newRow = Array.from(this.map[0], _ => ".");
+          this.map.unshift(newRow);
+        }
+        break;
+      case "left":
+        this.position.x -= 1;
+        if (this.position.x < 0) {
+          this.position.x = 0;
+          this.map.forEach(row => row.unshift("."));
+        }
+        break;
+      case "down":
+        this.position.y += 1;
+        if (this.position.y === this.map.length) {
+          const newRow = Array.from(this.map[0], _ => ".");
+          this.map.push(newRow);
+        }
+        break;
+      case "right":
+        this.position.x += 1;
+        if (this.position.x === this.map[0].length) {
+          this.map.forEach(row => row.push("."));
+        }
+        break;
+    }
+
+    // printMap(this.map, this.position);
+  };
+
+  this.toggle = () => {
+    const { x, y } = this.position;
+    const currentState = this.map[y][x];
+    if (currentState === ".") {
+      this.map[y][x] = "W";
+    } else if (currentState === "W") {
+      this.infectionCount += 1;
+      this.map[y][x] = "#";
+    } else if (currentState === "#") {
+      this.map[y][x] = "F";
+    } else {
+      this.map[y][x] = ".";
+    }
+  };
+
+  this.work = () => {
+    const currentState = this.map[this.position.y][this.position.x];
+    if (currentState === ".") {
+      this.turnLeft();
+    } else if (currentState === "#") {
+      this.turnRight();
+    } else if (currentState === "F") {
+      this.turnRight();
+      this.turnRight();
+    }
+
+    this.toggle();
+    this.move();
+  };
+}
