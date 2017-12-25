@@ -1,20 +1,12 @@
 import { read } from "./utils";
-import { generateRuleMap, Fractal, countPixels } from "./21";
+import { Virus } from "./22";
 
-read("inputs/21.input.txt").then(text => {
-  const seed = ".#./..#/###";
+read("inputs/22.input.txt").then(text => {
+  const virus = new Virus({ map: text });
   let i = 0;
-
-  const fractal = new Fractal({ seed, ruleMap: generateRuleMap(text) });
-
-  for (; i < 5; i++) {
-    fractal.tick();
+  for (; i < 1e4; i++) {
+    virus.work();
   }
-
-  console.log("1: ", countPixels(fractal.state));
-
-  for (; i < 18; i++) {
-    fractal.tick();
-  }
-  console.log("2: ", countPixels(fractal.state));
+  console.log("1: ", virus.infectionCount);
+  // console.log("2: ", countPixels(fractal.state));
 });

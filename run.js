@@ -4,7 +4,7 @@ import { SpecReporter } from "jasmine-spec-reporter";
 var jasmine = new Jasmine();
 
 jasmine.loadConfig({
-  spec_files: ["specs/21.test.js"]
+  spec_files: ["specs/22.test.js"]
 });
 
 jasmine.clearReporters(); // remove default reporter logs
