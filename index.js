@@ -1,14 +1,16 @@
 import { read } from "./utils";
-import { GPU } from "./20";
+import { generateRuleMap, Fractal, countPixels } from "./21";
 
-read("inputs/20.input.txt").then(text => {
-  // let run = mazerunner(text);
-  console.log("1: ", 157); // particle with smallest v and no a
+read("inputs/21.input.txt").then(text => {
+  const seed = ".#./..#/###";
 
-  const gpu = new GPU(text);
+  const fractal = new Fractal({ seed, ruleMap: generateRuleMap(text) });
 
-  for (var i = 0; i < 1e2; i++) {
-    gpu.tick();
-  }
-  console.log("2: ", gpu.particles.length);
+  fractal.tick();
+  fractal.tick();
+  fractal.tick();
+  fractal.tick();
+  fractal.tick();
+
+  console.log("1: ", countPixels(fractal.state));
 });
