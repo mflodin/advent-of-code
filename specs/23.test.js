@@ -1,4 +1,4 @@
-import { Coprocessor } from "../23";
+import { Coprocessor, optimizedCoprocessor } from "../23";
 
 describe("Coprocessor", () => {
   it("should have a set method", () => {
@@ -116,5 +116,11 @@ describe("Coprocessor", () => {
       coprocessor.execute();
       expect(coprocessor.mulCount).toBe(2);
     });
+  });
+});
+
+describe("optimizedCoprocessor", () => {
+  it("should get the same result as the normal Coprocessor in debug mode", () => {
+    expect(optimizedCoprocessor({ debug: true }).h).toEqual(1);
   });
 });

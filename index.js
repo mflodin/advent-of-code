@@ -1,11 +1,18 @@
 import { read } from "./utils";
-import { Coprocessor } from "./23";
+import { Coprocessor, optimizedCoprocessor } from "./23";
 
 read("inputs/23.input.txt").then(text => {
-  const coprocessor = new Coprocessor({ instructions: text });
-  while (coprocessor.i < 1e5) {
-    coprocessor.execute();
+  const debugprocessor = new Coprocessor({ instructions: text });
+  try {
+    while (debugprocessor.i < 1e5) {
+      debugprocessor.execute();
+    }
+  } catch (e) {
+    console.log("1: ", debugprocessor.mulCount);
   }
-  console.log("1: ", coprocessor.mulCount);
+
+  const result = optimizedCoprocessor({ debug: false });
+  console.log("2: ", result.h);
+
   // console.log("2: ", evolvedVirus.infectionCount);
 });

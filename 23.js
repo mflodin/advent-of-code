@@ -45,10 +45,7 @@ export function Coprocessor({ instructions = "", debug = true } = {}) {
     // if (i > 2e6) {
     // throw "aaaaa";
     // }
-    if (this.i % 1e6 === 0 && this.i !== 0) {
-      console.log(this.i, fn, x, y, this.position, this.registers);
-      // console.log("id:", this.id, this.i, this.registers, this.queue.length);
-    }
+
     switch (fn) {
       case "set":
         this.set({ register: x, value: Y });
@@ -64,6 +61,11 @@ export function Coprocessor({ instructions = "", debug = true } = {}) {
         break;
       default:
     }
+
+    // if (this.i % 1e5 === 0 && this.i !== 0) {
+    // console.log(this.i, fn, x, y, this.position, this.registers);
+    // }
+
     this.i += 1;
   };
   this.set = ({ register, value }) => {
@@ -87,4 +89,43 @@ export function Coprocessor({ instructions = "", debug = true } = {}) {
       this.position += 1;
     }
   };
+}
+
+export function optimizedCoprocessor({ debug = true } = {}) {
+  let a = debug ? 0 : 1;
+  let b = 0;
+  let c = 0;
+  let d = 0;
+  let f = 0;
+  let h = 0;
+
+  b = 84;
+  c = b;
+  if (a === 1) {
+    // console.log("PRODUCTION MODE!!!");
+    b *= 100;
+    b += 100000;
+    c = b + 17000;
+  }
+
+  do {
+    // console.log("loop 0:   ", { b, d, f, h });
+    let sqrtB = Math.sqrt(b);
+    f = 1;
+    d = 2;
+    do {
+      if (b % d === 0 && b !== d) {
+        f = 0;
+        break;
+      }
+      d += 1;
+    } while (true && d <= sqrtB);
+    if (f === 0) {
+      // console.log("adding h!:", { b, d, f, h });
+      h += 1;
+    }
+    b = b + 17;
+  } while (true && b <= c);
+
+  return { b, d, f, h };
 }
