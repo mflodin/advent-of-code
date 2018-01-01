@@ -1,14 +1,52 @@
 export function runner({ input }) {
+  let t0 = Date.now();
   const components = parseInput(input);
-  console.log("parsed input...");
+  console.log("t:", Date.now() - t0, "parsed input...");
   const bridges = constructBridges({ components });
-  console.log("constructed bridges...", bridges.length);
+  console.log("t:", Date.now() - t0, "constructed bridges...", bridges.length);
   const strengths = bridges.map(calculateStrength);
-  console.log("calculated strengths...", strengths.length);
+  console.log(
+    "t:",
+    Date.now() - t0,
+    "calculated strengths...",
+    strengths.length
+  );
   const strongest = strengths.reduce((acc, curr) => {
     return curr > acc ? curr : acc;
   }, -Infinity);
-  return strongest;
+  console.log("t:", Date.now() - t0, "calculated strongest...", strongest);
+
+  const longestLength = bridges.reduce((acc, curr) => {
+    return curr.length > acc ? curr.length : acc;
+  }, -Infinity);
+  console.log("t:", Date.now() - t0, "calculated longest...", longestLength);
+  const longestBridges = bridges.filter(
+    bridge => bridge.length === longestLength
+  );
+  console.log(
+    "t:",
+    Date.now() - t0,
+    "found longest bridges...",
+    longestBridges.length
+  );
+  const longestStrengths = longestBridges.map(calculateStrength);
+  console.log(
+    "t:",
+    Date.now() - t0,
+    "calculated longestStrengths...",
+    longestStrengths.length
+  );
+  const strongestLongest = longestStrengths.reduce((acc, curr) => {
+    return curr > acc ? curr : acc;
+  }, -Infinity);
+  console.log(
+    "t:",
+    Date.now() - t0,
+    "calculated strongest longest...",
+    strongestLongest
+  );
+
+  return [strongest, strongestLongest];
 }
 
 export function Component(portString) {

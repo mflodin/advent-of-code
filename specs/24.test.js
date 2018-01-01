@@ -142,14 +142,12 @@ describe("calculateStrength", () => {
 
 describe("runner", () => {
   it("should find the strength of the strongest bridge", () => {
-    const strength = runner({ input });
+    const [strength] = runner({ input });
     expect(strength).toBe(31);
   });
-});
 
-describe("runner", () => {
-  it("should find the strength of the strongest bridge", () => {
-    const strength = runner({ input });
-    expect(strength).toBe(31);
+  it("should find the strength of the strongest longest bridge", () => {
+    const [_, strength] = runner({ input });
+    expect(strength).toBe(19);
   });
 });
