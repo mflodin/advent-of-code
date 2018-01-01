@@ -1,52 +1,28 @@
 export function runner({ input }) {
-  let t0 = Date.now();
   const components = parseInput(input);
-  console.log("t:", Date.now() - t0, "parsed input...");
   const bridges = constructBridges({ components });
-  console.log("t:", Date.now() - t0, "constructed bridges...", bridges.length);
-  const strengths = bridges.map(calculateStrength);
-  console.log(
-    "t:",
-    Date.now() - t0,
-    "calculated strengths...",
-    strengths.length
-  );
-  const strongest = strengths.reduce((acc, curr) => {
-    return curr > acc ? curr : acc;
-  }, -Infinity);
-  console.log("t:", Date.now() - t0, "calculated strongest...", strongest);
 
-  const longestLength = bridges.reduce((acc, curr) => {
-    return curr.length > acc ? curr.length : acc;
-  }, -Infinity);
-  console.log("t:", Date.now() - t0, "calculated longest...", longestLength);
+  const strongest = getStrongest(bridges);
+
+  const longestLength = getLongest(bridges);
   const longestBridges = bridges.filter(
     bridge => bridge.length === longestLength
   );
-  console.log(
-    "t:",
-    Date.now() - t0,
-    "found longest bridges...",
-    longestBridges.length
-  );
-  const longestStrengths = longestBridges.map(calculateStrength);
-  console.log(
-    "t:",
-    Date.now() - t0,
-    "calculated longestStrengths...",
-    longestStrengths.length
-  );
-  const strongestLongest = longestStrengths.reduce((acc, curr) => {
-    return curr > acc ? curr : acc;
-  }, -Infinity);
-  console.log(
-    "t:",
-    Date.now() - t0,
-    "calculated strongest longest...",
-    strongestLongest
-  );
+  const strongestLongest = getStrongest(longestBridges);
 
   return [strongest, strongestLongest];
+}
+
+function getStrongest(bridges) {
+  return bridges.reduce((acc, curr) => {
+    return curr.strength > acc ? curr.strength : acc;
+  }, -Infinity);
+}
+
+function getLongest(bridges) {
+  return bridges.reduce((acc, curr) => {
+    return curr.length > acc ? curr.length : acc;
+  }, -Infinity);
 }
 
 export function Component(portString) {
@@ -57,11 +33,8 @@ export function Component(portString) {
 export function Bridge() {
   this.sections = [];
   this.endConnection = 0;
-  Object.defineProperty(this, "length", {
-    get() {
-      return this.sections.length;
-    }
-  });
+  this.length = 0;
+  this.strength = 0;
 
   this.add = component => {
     if (component.ports[0] === this.endConnection) {
@@ -77,6 +50,8 @@ export function Bridge() {
     }
 
     this.sections.push(component);
+    this.length += 1;
+    this.strength += component.ports[0] + component.ports[1];
   };
 
   this.toString = () => this.sections.join("--");
