@@ -1,8 +1,7 @@
 import { read } from "./utils";
-import { runner } from "./24";
+import { TuringMachine, runner } from "./25";
 
-read("inputs/24.input.txt").then(text => {
-  const [strongest, strongestLongest] = runner({ input: text });
-  console.log("1: ", strongest);
-  console.log("2: ", strongestLongest);
+read("inputs/25.input.txt").then((text) => {
+  const checksum = runner(new TuringMachine(text));
+  console.log("1: ", checksum);
 });
