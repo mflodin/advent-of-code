@@ -12,16 +12,19 @@
     "debug-test": "babel-node --inspect --inspect-brk run.js",
     "test": "nodemon --exec babel-node run.js"
   },
-  "keywords": ["fun", "advent"],
+  "keywords": [
+    "fun",
+    "advent"
+  ],
   "author": "Martin Flodin <mflodin@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "jasmine": "^2.8.0",
+    "babel-preset-env": "^1.7.0",
+    "jasmine": "^3.3.1",
     "jasmine-spec-reporter": "^4.2.1",
-    "nodemon": "^1.12.2"
+    "nodemon": "^1.18.8"
   },
   "babel": {
     "presets": [
